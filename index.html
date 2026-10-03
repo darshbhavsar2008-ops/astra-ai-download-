@@ -1,0 +1,1045 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#03050a">
+
+<title>ASTRA — Your Personal AI</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background: #020309;
+    color: #fff;
+    font-family: Inter, Arial, Helvetica, sans-serif;
+    overflow-x: hidden;
+}
+
+/* =========================
+   COSMIC BACKGROUND
+========================= */
+
+#stars {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -5;
+    background:
+        radial-gradient(circle at 50% 35%, rgba(72,95,170,.18), transparent 28%),
+        radial-gradient(circle at 15% 80%, rgba(75,45,130,.14), transparent 30%),
+        radial-gradient(circle at 85% 20%, rgba(40,90,150,.12), transparent 30%),
+        #020309;
+}
+
+#stars::before {
+    content: "";
+    position: absolute;
+    inset: -100px;
+    background-image:
+        radial-gradient(circle, rgba(255,255,255,.85) 1px, transparent 1.4px),
+        radial-gradient(circle, rgba(130,170,255,.6) 1px, transparent 1.4px);
+    background-size: 95px 95px, 155px 155px;
+    animation: universe 100s linear infinite;
+    opacity: .45;
+}
+
+@keyframes universe {
+    from {
+        transform: translate(0,0) rotate(0deg);
+    }
+    to {
+        transform: translate(120px,220px) rotate(8deg);
+    }
+}
+
+/* =========================
+   MOUSE GLOW
+========================= */
+
+#cursorGlow {
+    position: fixed;
+    width: 320px;
+    height: 320px;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: -1;
+    background: radial-gradient(
+        circle,
+        rgba(100,140,255,.12),
+        transparent 65%
+    );
+    transform: translate(-50%,-50%);
+}
+
+/* =========================
+   NAVIGATION
+========================= */
+
+.nav {
+    position: fixed;
+    top: 18px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: min(94%, 1100px);
+    padding: 13px 18px;
+    border-radius: 22px;
+
+    background: rgba(255,255,255,.045);
+    border: 1px solid rgba(255,255,255,.11);
+
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    z-index: 100;
+
+    box-shadow:
+        0 15px 60px rgba(0,0,0,.35),
+        inset 0 1px rgba(255,255,255,.08);
+}
+
+.logo {
+    font-weight: 800;
+    letter-spacing: 4px;
+    font-size: 15px;
+}
+
+.nav-links {
+    display: flex;
+    gap: 25px;
+}
+
+.nav-links a {
+    color: rgba(255,255,255,.55);
+    text-decoration: none;
+    font-size: 13px;
+    transition: .3s;
+}
+
+.nav-links a:hover {
+    color: #fff;
+}
+
+/* =========================
+   HERO
+========================= */
+
+.hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 130px 20px 80px;
+}
+
+.hero-content {
+    max-width: 950px;
+    animation: heroEnter 1.5s cubic-bezier(.2,.8,.2,1);
+}
+
+@keyframes heroEnter {
+    from {
+        opacity: 0;
+        transform: translateY(45px) scale(.96);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* =========================
+   ASTRA CORE
+========================= */
+
+.core {
+    width: 155px;
+    height: 155px;
+    margin: 0 auto 45px;
+    position: relative;
+    border-radius: 50%;
+
+    background:
+        radial-gradient(
+            circle at 30% 25%,
+            #ffffff 0%,
+            #d5e3ff 5%,
+            #8baeff 16%,
+            #465edb 35%,
+            #171b48 62%,
+            #03040b 100%
+        );
+
+    box-shadow:
+        0 0 35px rgba(110,145,255,.7),
+        0 0 90px rgba(85,110,255,.4),
+        0 0 180px rgba(60,80,255,.18),
+        inset -25px -30px 50px rgba(0,0,0,.65);
+
+    animation: coreFloat 4.5s ease-in-out infinite;
+}
+
+.core::before {
+    content: "";
+    position: absolute;
+    inset: -22px;
+    border-radius: 50%;
+    border: 1px solid rgba(170,195,255,.28);
+    animation: orbit 8s linear infinite;
+}
+
+.core::after {
+    content: "";
+    position: absolute;
+    inset: -42px;
+    border-radius: 50%;
+    border: 1px solid rgba(255,255,255,.08);
+    animation: orbit 14s linear infinite reverse;
+}
+
+@keyframes coreFloat {
+    0%,100% {
+        transform: translateY(0) rotate(0deg);
+    }
+
+    50% {
+        transform: translateY(-18px) rotate(2deg);
+    }
+}
+
+@keyframes orbit {
+    from {
+        transform: rotate(0deg) scale(1);
+    }
+
+    to {
+        transform: rotate(360deg) scale(1.04);
+    }
+}
+
+/* =========================
+   HERO TEXT
+========================= */
+
+.eyebrow {
+    font-size: 11px;
+    letter-spacing: 6px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,.4);
+    margin-bottom: 20px;
+}
+
+h1 {
+    font-size: clamp(70px, 15vw, 155px);
+    line-height: .85;
+    letter-spacing: -9px;
+    margin-bottom: 30px;
+
+    background:
+        linear-gradient(
+            110deg,
+            #ffffff,
+            #a9c3ff,
+            #ffffff,
+            #7e9dff,
+            #ffffff
+        );
+
+    background-size: 300% 100%;
+
+    -webkit-background-clip: text;
+    color: transparent;
+
+    animation: shine 7s ease infinite;
+}
+
+@keyframes shine {
+    0%,100% {
+        background-position: 0%;
+    }
+
+    50% {
+        background-position: 100%;
+    }
+}
+
+.hero-subtitle {
+    font-size: clamp(18px, 3vw, 25px);
+    color: rgba(255,255,255,.65);
+    margin-bottom: 12px;
+}
+
+.hero-description {
+    max-width: 580px;
+    margin: auto;
+    color: rgba(255,255,255,.38);
+    line-height: 1.8;
+    font-size: 15px;
+}
+
+/* =========================
+   DOWNLOAD BUTTON
+========================= */
+
+.download {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    margin-top: 35px;
+    padding: 17px 30px;
+
+    border-radius: 18px;
+
+    background: #fff;
+    color: #030409;
+
+    text-decoration: none;
+    font-weight: 750;
+    font-size: 15px;
+
+    transition:
+        transform .35s,
+        box-shadow .35s;
+}
+
+.download::before {
+    content: "";
+    position: absolute;
+    inset: -2px;
+    border-radius: 20px;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(150,180,255,.7),
+        transparent
+    );
+    z-index: -1;
+    filter: blur(8px);
+    opacity: 0;
+    transition: .35s;
+}
+
+.download:hover {
+    transform: translateY(-5px) scale(1.04);
+    box-shadow:
+        0 15px 60px rgba(130,160,255,.3);
+}
+
+.download:hover::before {
+    opacity: 1;
+}
+
+.version {
+    margin-top: 14px;
+    font-size: 11px;
+    color: rgba(255,255,255,.28);
+}
+
+/* =========================
+   SCROLL INDICATOR
+========================= */
+
+.scroll {
+    position: absolute;
+    bottom: 25px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 10px;
+    letter-spacing: 3px;
+    color: rgba(255,255,255,.25);
+    animation: scrollPulse 2s infinite;
+}
+
+@keyframes scrollPulse {
+    0%,100% {
+        opacity: .25;
+        transform: translate(-50%,0);
+    }
+
+    50% {
+        opacity: .8;
+        transform: translate(-50%,7px);
+    }
+}
+
+/* =========================
+   SECTIONS
+========================= */
+
+section {
+    width: min(1100px, 92%);
+    margin: auto;
+    padding: 120px 0;
+}
+
+.section-label {
+    text-align: center;
+    font-size: 10px;
+    letter-spacing: 5px;
+    color: rgba(255,255,255,.3);
+    margin-bottom: 14px;
+}
+
+.section-title {
+    text-align: center;
+    font-size: clamp(40px, 7vw, 75px);
+    letter-spacing: -5px;
+    margin-bottom: 55px;
+}
+
+/* =========================
+   GLASS
+========================= */
+
+.glass {
+    background: rgba(255,255,255,.045);
+    border: 1px solid rgba(255,255,255,.1);
+    backdrop-filter: blur(28px);
+    -webkit-backdrop-filter: blur(28px);
+
+    box-shadow:
+        inset 0 1px rgba(255,255,255,.08),
+        0 30px 90px rgba(0,0,0,.3);
+}
+
+/* =========================
+   ABOUT
+========================= */
+
+.about {
+    padding: 60px;
+    border-radius: 32px;
+    text-align: center;
+}
+
+.about p {
+    max-width: 750px;
+    margin: auto;
+    font-size: 18px;
+    line-height: 1.9;
+    color: rgba(255,255,255,.5);
+}
+
+/* =========================
+   FEATURE GRID
+========================= */
+
+.features {
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    gap: 18px;
+}
+
+.feature {
+    min-height: 240px;
+    padding: 35px;
+    border-radius: 28px;
+    transition:
+        transform .4s,
+        background .4s,
+        border-color .4s;
+}
+
+.feature:hover {
+    transform: translateY(-10px) scale(1.015);
+    background: rgba(255,255,255,.075);
+    border-color: rgba(255,255,255,.2);
+}
+
+.feature-icon {
+    font-size: 32px;
+    margin-bottom: 30px;
+}
+
+.feature h3 {
+    font-size: 20px;
+    margin-bottom: 12px;
+}
+
+.feature p {
+    color: rgba(255,255,255,.4);
+    line-height: 1.7;
+}
+
+/* =========================
+   CHAT PREVIEW
+========================= */
+
+.chat {
+    max-width: 680px;
+    margin: auto;
+    border-radius: 30px;
+    padding: 25px;
+}
+
+.chat-header {
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 20px;
+    border-bottom: 1px solid rgba(255,255,255,.08);
+}
+
+.chat-name {
+    font-weight: 700;
+    letter-spacing: 3px;
+}
+
+.status {
+    color: #8cffc1;
+    font-size: 11px;
+}
+
+.message {
+    max-width: 78%;
+    padding: 14px 17px;
+    margin-top: 18px;
+    border-radius: 18px;
+    line-height: 1.5;
+    font-size: 14px;
+}
+
+.ai {
+    background: rgba(255,255,255,.07);
+    color: rgba(255,255,255,.7);
+}
+
+.user {
+    margin-left: auto;
+    background: white;
+    color: #050609;
+}
+
+/* =========================
+   BIG STATEMENT
+========================= */
+
+.statement {
+    text-align: center;
+}
+
+.statement h2 {
+    font-size: clamp(45px, 8vw, 100px);
+    line-height: .95;
+    letter-spacing: -6px;
+}
+
+.statement p {
+    margin-top: 25px;
+    color: rgba(255,255,255,.35);
+}
+
+/* =========================
+   DOWNLOAD SECTION
+========================= */
+
+.download-section {
+    text-align: center;
+}
+
+.download-box {
+    padding: 80px 25px;
+    border-radius: 35px;
+    position: relative;
+    overflow: hidden;
+}
+
+.download-box::before {
+    content: "";
+    position: absolute;
+    width: 500px;
+    height: 500px;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+    background: radial-gradient(
+        circle,
+        rgba(90,120,255,.15),
+        transparent 65%
+    );
+    pointer-events: none;
+}
+
+.download-box h2 {
+    position: relative;
+    font-size: clamp(45px, 8vw, 90px);
+    letter-spacing: -6px;
+}
+
+.download-box p {
+    position: relative;
+    margin-top: 15px;
+    color: rgba(255,255,255,.4);
+}
+
+/* =========================
+   FOOTER
+========================= */
+
+footer {
+    text-align: center;
+    padding: 70px 20px;
+    border-top: 1px solid rgba(255,255,255,.06);
+    color: rgba(255,255,255,.25);
+    font-size: 11px;
+    letter-spacing: 2px;
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:700px) {
+
+    .nav {
+        justify-content: center;
+    }
+
+    .nav-links {
+        display: none;
+    }
+
+    .core {
+        width: 110px;
+        height: 110px;
+        margin-bottom: 35px;
+    }
+
+    h1 {
+        font-size: 70px;
+        letter-spacing: -5px;
+    }
+
+    .features {
+        grid-template-columns: 1fr;
+    }
+
+    section {
+        padding: 85px 0;
+    }
+
+    .about {
+        padding: 35px 25px;
+    }
+
+    .about p {
+        font-size: 15px;
+    }
+
+    .feature {
+        min-height: auto;
+    }
+
+    .statement h2 {
+        letter-spacing: -4px;
+    }
+}
+</style>
+
+</head>
+
+<body>
+
+<div id="stars"></div>
+<div id="cursorGlow"></div>
+
+<!-- NAVIGATION -->
+
+<nav class="nav">
+
+```
+<div class="logo">
+    ASTRA
+</div>
+
+<div class="nav-links">
+    <a href="#about">About</a>
+    <a href="#features">Features</a>
+    <a href="#experience">Experience</a>
+    <a href="#download">Download</a>
+</div>
+```
+
+</nav>
+
+<!-- HERO -->
+
+<header class="hero">
+
+```
+<div class="hero-content">
+
+    <div class="core"></div>
+
+    <div class="eyebrow">
+        Personal Artificial Intelligence
+    </div>
+
+    <h1>ASTRA</h1>
+
+    <div class="hero-subtitle">
+        Your personal AI.
+    </div>
+
+    <p class="hero-description">
+        A new space for thinking, creating, exploring
+        and discovering with AI.
+    </p>
+
+    <a
+        class="download"
+        href="https://github.com/darshbhavsar2008-ops/astra-download/releases/download/v1.0.0/app-release.apk">
+
+        ↓ &nbsp; Download Astra
+
+    </a>
+
+    <div class="version">
+        Android · v1.0.0 · 59.6 MB
+    </div>
+
+</div>
+
+<div class="scroll">
+    SCROLL ↓
+</div>
+```
+
+</header>
+
+<!-- ABOUT -->
+
+<section id="about">
+
+```
+<div class="section-label">
+    THE IDEA
+</div>
+
+<h2 class="section-title">
+    More than an assistant.
+</h2>
+
+<div class="glass about">
+
+    <p>
+        Astra is a personal AI experience designed to
+        bring intelligence into a simple, beautiful and
+        futuristic space. Ask questions, explore ideas,
+        create and discover what's possible.
+    </p>
+
+</div>
+```
+
+</section>
+
+<!-- FEATURES -->
+
+<section id="features">
+
+```
+<div class="section-label">
+    ASTRA
+</div>
+
+<h2 class="section-title">
+    Built for curiosity.
+</h2>
+
+<div class="features">
+
+    <div class="glass feature">
+
+        <div class="feature-icon">
+            ✦
+        </div>
+
+        <h3>
+            Intelligence
+        </h3>
+
+        <p>
+            Ask questions, understand ideas and explore
+            conversations with your personal AI.
+        </p>
+
+    </div>
+
+    <div class="glass feature">
+
+        <div class="feature-icon">
+            ◌
+        </div>
+
+        <h3>
+            Personal
+        </h3>
+
+        <p>
+            Astra is designed as a personal assistant
+            experience rather than just another chatbot.
+        </p>
+
+    </div>
+
+    <div class="glass feature">
+
+        <div class="feature-icon">
+            ⌁
+        </div>
+
+        <h3>
+            Liquid Glass
+        </h3>
+
+        <p>
+            A visual experience inspired by light,
+            transparency, depth and motion.
+        </p>
+
+    </div>
+
+    <div class="glass feature">
+
+        <div class="feature-icon">
+            ∞
+        </div>
+
+        <h3>
+            Always Evolving
+        </h3>
+
+        <p>
+            Astra is an evolving project with new
+            possibilities planned for the future.
+        </p>
+
+    </div>
+
+</div>
+```
+
+</section>
+
+<!-- EXPERIENCE -->
+
+<section id="experience">
+
+```
+<div class="section-label">
+    EXPERIENCE
+</div>
+
+<h2 class="section-title">
+    Just ask.
+</h2>
+
+<div class="glass chat">
+
+    <div class="chat-header">
+
+        <div class="chat-name">
+            ✦ ASTRA
+        </div>
+
+        <div class="status">
+            ● ONLINE
+        </div>
+
+    </div>
+
+    <div class="message ai">
+        Hello. I'm Astra.
+    </div>
+
+    <div class="message user">
+        What should I explore today?
+    </div>
+
+    <div class="message ai">
+        Something you've never explored before.
+    </div>
+
+</div>
+```
+
+</section>
+
+<!-- STATEMENT -->
+
+<section class="statement">
+
+```
+<h2>
+    Think.<br>
+    Create.<br>
+    Explore.
+</h2>
+
+<p>
+    One personal AI. Endless possibilities.
+</p>
+```
+
+</section>
+
+<!-- DOWNLOAD -->
+
+<section id="download" class="download-section">
+
+```
+<div class="glass download-box">
+
+    <div class="section-label">
+        AVAILABLE NOW
+    </div>
+
+    <h2>
+        Enter Astra.
+    </h2>
+
+    <p>
+        Start your personal AI journey.
+    </p>
+
+    <a
+        class="download"
+        href="https://github.com/darshbhavsar2008-ops/astra-download/releases/download/v1.0.0/app-release.apk">
+
+        ↓ &nbsp; Get Astra for Android
+
+    </a>
+
+    <div class="version">
+        Version 1.0.0 · Android · 59.6 MB
+    </div>
+
+</div>
+```
+
+</section>
+
+<footer>
+
+```
+ASTRA ✦
+
+<br><br>
+
+A personal AI project
+
+<br><br>
+
+© 2026 Astra
+```
+
+</footer>
+
+<script>
+
+/* =========================
+   MOUSE LIGHT
+========================= */
+
+const glow = document.getElementById("cursorGlow");
+
+document.addEventListener("mousemove", (event) => {
+
+    glow.style.left = event.clientX + "px";
+    glow.style.top = event.clientY + "px";
+
+});
+
+/* =========================
+   FEATURE PARALLAX
+========================= */
+
+document.querySelectorAll(".feature").forEach(card => {
+
+    card.addEventListener("mousemove", event => {
+
+        const rect = card.getBoundingClientRect();
+
+        const x =
+            event.clientX - rect.left;
+
+        const y =
+            event.clientY - rect.top;
+
+        const rotateX =
+            ((y / rect.height) - .5) * -5;
+
+        const rotateY =
+            ((x / rect.width) - .5) * 5;
+
+        card.style.transform =
+            `perspective(800px)
+             rotateX(${rotateX}deg)
+             rotateY(${rotateY}deg)
+             translateY(-8px)
+             scale(1.015)`;
+
+    });
+
+    card.addEventListener("mouseleave", () => {
+
+        card.style.transform =
+            "perspective(800px) rotateX(0) rotateY(0) translateY(0) scale(1)";
+
+    });
+
+});
+
+/* =========================
+   DOWNLOAD BUTTON MAGNETIC
+========================= */
+
+document.querySelectorAll(".download").forEach(button => {
+
+    button.addEventListener("mousemove", event => {
+
+        const rect = button.getBoundingClientRect();
+
+        const x =
+            event.clientX - rect.left - rect.width / 2;
+
+        const y =
+            event.clientY - rect.top - rect.height / 2;
+
+        button.style.transform =
+            `translate(${x * .08}px, ${y * .08}px) scale(1.04)`;
+
+    });
+
+    button.addEventListener("mouseleave", () => {
+
+        button.style.transform =
+            "translate(0,0) scale(1)";
+
+    });
+
+});
+
+</script>
+
+</body>
+</html>
